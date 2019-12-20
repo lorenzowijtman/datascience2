@@ -1,7 +1,7 @@
 ui <- fluidPage(
   
   # Application title
-  titlePanel("Old Faithful Geyser Data"),
+  titlePanel("Some Hotel Data"),
   
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
@@ -15,7 +15,7 @@ ui <- fluidPage(
     
     # Show a plot of the generated distribution
     mainPanel(
-      plotOutput("distPlot")
+      leafletOutput(outputId = "mymap"),
     )
   )
 )

@@ -1,0 +1,96 @@
+shiny interactive
+ffbase experiment with processing time / storage
+mongodb get data out while interacting with the dashboard
+hadoop, only to understand differences /spark
+spark optional, could be keras
+keras optional could be spark
+
+ Several R scripts or Python scripts
+1.
+To obtain an attractive visual representation of all the data in the dataset. With visual interactive elements to support the socalled 
+Visualisation mantra:
+
+Overview: Gain an overview of the entire collection
+
+Zoom : Zoom in on items of interest 
+
+Filter: filter out interesting items or filter in interesting items
+
+Details: on demand: Select an item or group and get relevant information accordingly
+2.
+To simulate big data and RAM problems, additional libraries are used
+o
+In case of R , for instance the library FFBASE 
+o
+In case of Python, for instance the library PyTable
+After some initial selection cleaning the result should be written away as a Review_pos.csv and Review_neg.csv
+3.
+All of the  dataset is stored in a NOSQL database, for instance MONGODB
+. A live connection to filter data during the process of running
+the script should be implemented:
+o
+There should be a collection containing all of the data of the Kaggle dataset having the following structure
+i.
+Hotel_Address text,
+ii.
+Hotel_Name text,
+iii.
+ Lat double,
+iv.
+ Lng double,
+v.
+ Average_Score double,
+Manual Data Engineer and Data Scientist Part 2
+5
+vi.
+ Total_Number_of_Reviews int,
+vii.
+ Additional_Number_of_Scoring int,
+viii.
+  Reviewer_Nationality text,
+ix.
+  Review_Date text,
+x.
+  Review text,
+xi.
+  Review_Word_Counts int,
+xii.
+  Total_Number_of_Reviews_Reviewer_Has_Given int,
+xiii.
+  Reviewer_Score double,
+xiv.
+  Tags text,
+xv.
+  Sentiment int, additional field indicating a positive Review 1, or a negative review 0
+o
+There should be a collection of balanced set of reviews, for instance a collection consisting of 10.000 positive and 10.000 
+negative reviews having a least the following structure
+i.
+Review text,
+ii.
+Sentiment int
+4.
+At least one more or less advanced feature should be implemented.
+i.
+Either the student simulates parallel processing power. For example, a sentiment analysis of the hotel reviews is solved 
+by using Spark.
+ii.
+Or the student demonstrates state-of -the-art algorithms. For example, a prediction on the sentiment of a review using 
+the length of the review be built using Keras
+2
+A compact report
+ , meeting the following requirements , the report should be
+1.
+In correct English or Dutch
+2.
+Containing relevant screenshots of codes 
+3.
+Containing relevant screenshots of the visualisation
+4.
+Clarify the process of Model Building
+a.
+What kind of Machine Learning algorithm was used? 
+b.
+Why was it needed?
+5.
+Communicating the result

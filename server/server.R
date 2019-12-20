@@ -1,11 +1,16 @@
+library(shiny)
+library(leaflet)
+library(dplyr)
+library(leaflet.extras)
+
+source("database/MongoDB.R")
+
 server <- function(input, output) {
   
-  output$distPlot <- renderPlot({
-    # generate bins based on input$bins from ui.R
-    x    <- faithful[, 2]
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    
-    # draw the histogram with the specified number of bins
-    hist(x, breaks = bins, col = 'darkgray', border = 'white')
+  output$mymap <- renderLeaflet({
+    leaflet(dfAll) %>%
+      setView(lng=-20, lat=45, zoom=4) %>%
+      addTiles() %>%
+      addCircles(data = dfAll, lat = ~lat, lng = ~lng, weight = 1)
   })
 }
