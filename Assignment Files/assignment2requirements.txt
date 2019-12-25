@@ -21,9 +21,6 @@ Details: on demand: Select an item or group and get relevant information accordi
 To simulate big data and RAM problems, additional libraries are used
 o
 In case of R , for instance the library FFBASE 
-o
-In case of Python, for instance the library PyTable
-After some initial selection cleaning the result should be written away as a Review_pos.csv and Review_neg.csv
 3.
 All of the  dataset is stored in a NOSQL database, for instance MONGODB
 . A live connection to filter data during the process of running
