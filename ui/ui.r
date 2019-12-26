@@ -6,14 +6,12 @@ ui <- fluidPage(
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
     sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
+      selectInput("countrySelect", "Select Country", choices = c("All"), multiple = F),
+      selectInput("citySelect", "Select City", choices = c("All","Amsterdam", "London", "Paris"), multiple = F),
+      selectInput("hotelSelect", "Select Hotel", choices = c("All"), multiple = F),
     ),
     
-    # Show a plot of the generated distribution
+    # Show a map
     mainPanel(
       leafletOutput(outputId = "mymap"),
     )
