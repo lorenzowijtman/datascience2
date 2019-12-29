@@ -14,6 +14,9 @@ ui <- fluidPage(
     # Show a map
     mainPanel(
       leafletOutput(outputId = "mymap"),
+      fluidRow(
+        dataTableOutput("Table")
+      )
     )
   )
 )
