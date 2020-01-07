@@ -39,7 +39,8 @@ server <- function(input, output, session) {
       if(city_locations$city[i] == input$citySelect) {
         lat <- city_locations$lat[i]
         long <- city_locations$long[i]
-        renderMap(lat, long, zoom, unique(hotels$lat), unique(hotels$lng))
+        
+        renderMap(lat, long, zoom, hotels)
       } 
     }
     
@@ -57,26 +58,27 @@ server <- function(input, output, session) {
         if(city_locations$city[i] == input$citySelect) {
           lat <- city_locations$lat[i]
           long <- city_locations$long[i]
-          renderMap(lat, long, 10, unique(hotels$lat), unique(hotels$lng))
+          renderMap(lat, long, 10, hotels)
         } 
       }
     } else {
-      sub <- subset(hotels, Hotel_Name == as.character(selectedHotel), select = c(lat, lng)) %>%
-        unique()
-      
-      renderMap(sub$lat, sub$lng, 15, sub$lat, sub$lng)
+      sub <- subset(hotels, Hotel_Name == as.character(selectedHotel), select = c(Hotel_Name, Hotel_Address, lat, lng, Average_Score, Reviewer_Nationality, Total_Number_of_Reviews))
+     
+      renderMap(unique(sub$lat), unique(sub$lng), 15, sub)
     }
     
   }, ignoreInit = TRUE)
   
-  renderMap <- function(lat, long, zoom, latList, lngList) {
-    if(!is.null(latList) & !is.null(lngList)) {
-      print("not null")
+  renderMap <- function(lat, long, zoom, hotels) {
+    if(!is.null(hotels)) {
       output$mymap <- renderLeaflet({
         leaflet(dfAll) %>%
           setView(lng=long, lat=lat, zoom=zoom) %>%
           addTiles()  %>%
-          addMarkers(lat = latList, lng = lngList)
+          addMarkers(lat = unique(hotels$lat), unique(hotels$lng), popup = paste("Name", unique(hotels$Hotel_Name), "<br>",
+                                                                                 "Address", unique(hotels$Hotel_Address), "<br>",
+                                                                                 "Average Score", unique(hotels$Average_Score), "<br>",
+                                                                                 "Amount of Reviews", unique(hotels$Total_Number_of_Reviews)))
       })} else {
         output$mymap <- renderLeaflet({
           leaflet(dfAll) %>%
@@ -85,4 +87,9 @@ server <- function(input, output, session) {
         })
       }
   }
+  
+  observeEvent(input$mymap_marker_click, { 
+    p <- input$mymap_marker_click
+    print(p)
+  })
 }
