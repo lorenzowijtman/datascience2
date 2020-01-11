@@ -95,3 +95,60 @@ sparkNbTesting2 <- function(posScore, negScore, limit) {
   print(paste0("accuracy: ", round(accuracy, 2), "%"))
   print(table)
 }
+
+
+
+
+
+# Testing with self written reviews ===================================================================================
+
+posQ <- paste0('{"sentiment": 1, "Reviewer_Score": {"$gt" : 8}}')
+negQ <- paste0('{"sentiment": 0, "Reviewer_Score": {"$lt" : 6}}')
+pos <- mcon$find(posQ, fields = '{"Positive_Review": true, "Reviewer_Score": true, "sentiment": true}', limit = 20000) 
+pos$`_id` <- NULL
+colnames(pos) <- c('review', 'score', 'sentiment')
+neg <- mcon$find(negQ, fields = '{"Negative_Review": true, "Reviewer_Score": true, "sentiment": true}', limit = 20000)
+neg$`_id` <- NULL
+colnames(neg) <- c('review', 'score', 'sentiment')
+print(nrow(pos))
+print(nrow(neg))
+df <- rbind(pos, neg)
+reviews_tbl <- copy_to(sc, df, name = "reviews_tbl", overwrite = T)
+rm(pos)
+rm(neg)
+rm(df)
+
+
+pipeline <- ml_pipeline(sc) %>%
+  ft_tokenizer(input_col = "review", output_col = "raw_tokens") %>%
+  ft_stop_words_remover(input_col = "raw_tokens", output_col = "tokens") %>%
+  ft_count_vectorizer("tokens", "vectokens") %>%
+  ft_r_formula(sentiment ~ vectokens) %>%
+  ml_naive_bayes()
+
+fitted_pipeline <- ml_fit(
+  pipeline,
+  reviews_tbl
+)
+
+
+test2 <- as.data.frame(c("It was a terrible experience and i don't want to come back ever again"))
+test <- as.data.frame(c("It amazing i absolutely loved it and i want to come back as often as i can, 
+                        I really enjoyed it and have nothing but love for the hotel"))
+
+colnames(test) <- c('review')
+colnames(test2) <- c('review')
+
+
+my_tbl <- sdf_copy_to(sc, test, "test", overwrite = T)
+
+prediction <- ml_predict(fitted_pipeline, my_tbl)
+prediction
+
+my_tbl2 <- sdf_copy_to(sc, test2, "testTwo", overwrite = T)
+
+prediction <- ml_predict(fitted_pipeline, my_tbl)
+prediction <- as.data.frame(prediction)
+prediction$prediction == 1
+
+

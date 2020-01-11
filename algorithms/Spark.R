@@ -228,13 +228,13 @@ sparkNbTesting(9, 7, 10000) # "accuracy: 94.24%" thank god it goes down again
 sparkNbTesting(9, 8, 10000) # "accuracy: 94.68%" I don't get it
 sparkNbTesting(9, 9, 10000) # "accuracy: 94.68%" - again, it is possible the same dataset it retrieved for these parameters
 
-# moving on to testing with higher amount of reviews - 15k
+# moving on to testing with higher amount of reviews - 30k
 sparkNbTesting(9, 6, 15000) # "accuracy: 94.56%"
 sparkNbTesting(9, 7, 15000) # "accuracy: 94.87%"
 sparkNbTesting(9, 8, 15000) # "accuracy: 94.88%"
 sparkNbTesting(9, 9, 15000) # "accuracy: 94.88%"
 
-# lets go to 20k
+# lets go to 40k
 sparkNbTesting(9, 5, 20000) # "accuracy: 94.25%"
 sparkNbTesting(9, 6, 20000) # "accuracy: 94.87%"
 sparkNbTesting(9, 7, 20000) # "accuracy: 94.91%"
@@ -261,12 +261,12 @@ sparkNbTesting(9.9, 8, 10000) # "accuracy: 95.05%"
 sparkNbTesting(9, 8, 10000) # "accuracy: 94.68%"
 sparkNbTesting(8, 8, 10000) # "accuracy: 94.51%"
 
-# lets go to 15k
+# lets go to 30k
 sparkNbTesting(9.9, 8, 15000) # "accuracy: 95.38%"  ========!!!!!Highest yet achieved!!!!!=========
 sparkNbTesting(9, 8, 15000) # "accuracy: 94.88%"
 sparkNbTesting(8, 8, 15000) # "accuracy: 94.73%" it seems to decrease the accuracy when i lower the positive score
 
-# lets go to 20k
+# lets go to 40k
 sparkNbTesting(9.9, 8, 20000) # "accuracy: 95.02%"
 sparkNbTesting(9, 8, 20000) # "accuracy: 95.09%"
 sparkNbTesting(8, 8, 20000) # "accuracy: 94.76%"
