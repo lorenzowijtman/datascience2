@@ -159,4 +159,12 @@ server <- function(input, output, session) {
     sentiment <- testNBWithOwnReview(review)
     output$selfSentiment <- renderText({sentiment})
   })
+  
+  
+  session$onSessionEnded(function() {
+    if(exists("sc") && spark_connection_is_open(sc)) {
+      spark_disconnect(sc)
+    }
+  })
+  
 }

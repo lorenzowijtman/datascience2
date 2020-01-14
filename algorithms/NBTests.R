@@ -1,5 +1,13 @@
 # connect to spark
-sc <- spark_connect(master = "local", version="2.0.0")
+sc <<- spark_connect(master = "local", version="2.0.0")
+
+toggleSpark <- function() {
+  if(exists("sc") && spark_connection_is_open(sc)) {
+    spark_disconnect(sc)
+  } else {
+    sc <<- spark_connect(master = "local", version="2.0.0")
+  }
+}
 
 trainNB <- function(posScore, negScore, limit) {
   limit <- (limit/2)
