@@ -3,7 +3,7 @@ sc <<- spark_connect(master = "local", version="2.0.0")
 
 trainNB <- function(posScore, negScore, limit) {
   limit <- (limit/2)
-  posQ <- paste0('{"sentiment": 1, "Reviewer_Score": {"$lt" : ',posScore,'}}')
+  posQ <- paste0('{"sentiment": 1, "Reviewer_Score": {"$gt" : ',posScore,'}}')
   negQ <- paste0('{"sentiment": 0, "Reviewer_Score": {"$lt" : ',negScore,'}}')
   pos <- mcon$find(posQ, fields = '{"Positive_Review": true, "Reviewer_Score": true, "sentiment": true}', limit = limit) 
   pos$`_id` <- NULL
@@ -14,7 +14,7 @@ trainNB <- function(posScore, negScore, limit) {
   print(nrow(pos))
   print(nrow(neg))
   df <- rbind(pos, neg)
-  copy_to(sc, df, name = "reviews_tbl", overwrite = T)
+  reviews_tbl <- copy_to(sc, df, name = "reviews_tbl", overwrite = T)
   rm(pos)
   rm(neg)
   rm(df)
